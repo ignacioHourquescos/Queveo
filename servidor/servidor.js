@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.get('/peliculas',buscarPeliculas.buscarPeliculas);
+app.get('/generos',buscarPeliculas.cargarGeneros);
 
 
 

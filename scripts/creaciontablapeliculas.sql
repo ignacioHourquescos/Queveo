@@ -1,4 +1,4 @@
-CREATE TABLE genero (	
+CREATE TABLE pelicula (	
       id INT NOT NULL auto_increment,
 	titulo VARCHAR(100) NOT NULL,
       duracion INT,
