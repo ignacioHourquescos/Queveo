@@ -1,4 +1,4 @@
-CREATE TABLE usuario (	
+CREATE TABLE genero (	
       id INT NOT NULL auto_increment,
 	titulo VARCHAR(100) NOT NULL,
       duracion INT,
@@ -10,3 +10,6 @@ CREATE TABLE usuario (
       trama VARCHAR(700),
       PRIMARY KEY (id)
 );
+
+
+
