@@ -11,20 +11,21 @@ function buscarPeliculas(req,res){
       var columna_orden=req.query.columna_orden;
       var tipo_orden=req.query.tipo_orden;
       var pagina=req.query.pagina;
+      var cantidad=req.query.cantidad;
       
       var               sql= "SELECT * FROM PELICULA WHERE 1=1"
       if(anio)          sql+=" AND anio="+anio;
       if(titulo)        sql+=" AND titulo like '%"+titulo+"%'";
       if(genero)        sql+=" AND genero="+genero;
       if(columna_orden) sql+=" ORDER BY "+columna_orden+" "+tipo_orden;
-                        sql+=" LIMIT "+pagina+",20";
+                        sql+=" LIMIT "+((pagina-1)*cantidad)+","+cantidad;
 
       con.query(sql,function(error,resultado,fields){
-            //var total_peliculas=resultado.length;
-            var response =  {
+            let total_peliculas=resultado.length;
+            let response =  {
                   'peliculas':resultado,
-                  //'total':total_peliculas
-            };        
+                  'total':total_peliculas
+            };     
             res.send(JSON.stringify(response));
             });
 }
