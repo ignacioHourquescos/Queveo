@@ -30,7 +30,7 @@ function buscarPeliculas(req,res){
             });
 }
 
-
+//funcion que carga los generos
 function cargarGeneros(req,res){
       var sql="SELECT * FROM GENERO";
       con.query(sql, function(error, resultado,fields){
@@ -41,7 +41,22 @@ function cargarGeneros(req,res){
       })
 }
 
+//funcion que va a cargar la ficha de cada pelicula particular
+function detallePelicula (req,res){
+      var id=req.params.id;
+      var sql="SELECT * FROM pelicula WHERE id="+id;
+      con.query(sql, function(error,resultado,fields){
+            var response={
+                  'info':resultado
+            };
+            res.send(JSON.stringify(response));
+      })
+
+}
+
+
 module.exports ={
       buscarPeliculas:buscarPeliculas,
-      cargarGeneros:cargarGeneros
+      cargarGeneros:cargarGeneros,
+      detallePelicula:detallePelicula
 };
