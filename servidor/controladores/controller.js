@@ -44,12 +44,13 @@ function cargarGeneros(req,res){
 //funcion que va a cargar la ficha de cada pelicula particular
 function detallePelicula (req,res){
       var id=req.params.id;
-      var sql="SELECT * FROM pelicula WHERE id="+id;
+      var sql="SELECT * FROM pelicula join actor_pelicula on pelicula.id=actor_pelicula.pelicula_id join actor on actor_pelicula.actor_id=actor.id where pelicula.id="+id;
+      
       con.query(sql, function(error,resultado,fields){
-            var response={
-                  'info':resultado
-            };
-            res.send(JSON.stringify(response));
+      var response={
+            'pelicula':resultado[0]
+      };
+      res.send(JSON.stringify(response));
       })
 
 }
