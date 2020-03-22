@@ -1,9 +1,5 @@
 var con = require('../lib/conexionbd');
 
-
-//http://localhost:8080/peliculas?pagina=1&genero=7&anio=2003&cantidad=52&columna_orden=titulo&tipo_orden=ASC
-
-
 function buscarPeliculas(req,res){  
       var anio =req.query.anio;
       var titulo=req.query.titulo;
@@ -68,8 +64,36 @@ function detallePelicula (req,res){
 }
 
 
+//"http://localhost:8080/peliculas/recomendacion?genero=Drama&anio_inicio=1900&anio_fin=2005&puntuacion=7".
+
+function recomendacion(req,res){
+      var genero        =req.query.genero;
+      var anio_inicio   =req.query.anio_inicio;
+      var anio_fin      =req.query.anio_fin;
+      var puntuacion    =req.query.puntuacion;
+     
+      var               sql= "SELECT * FROM PELICULA WHERE 1=1"
+      if (genero)       sql+=" AND genero_id=4";
+      if (anio_inicio)  sql+=" AND anio BETWEEN "+anio_inicio+" AND "+anio_fin;
+      if (puntuacion)   sql+=" AND puntuacion>="+puntuacion;
+
+      con.query(sql, function(error,resultado,fields){
+            if(error){
+                  console.log("hubo un error en la consutla", error.message);
+                  return res.status(404).send("Error en la consulta");
+            }
+            var response={
+                  'peliculas':resultado
+            }
+            res.send(JSON.stringify(response));      
+            }
+      )
+
+}
+
 module.exports ={
       buscarPeliculas:buscarPeliculas,
       cargarGeneros:cargarGeneros,
-      detallePelicula:detallePelicula
+      detallePelicula:detallePelicula,
+      recomendacion:recomendacion
 };
