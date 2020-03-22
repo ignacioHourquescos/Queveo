@@ -44,15 +44,27 @@ function cargarGeneros(req,res){
 //funcion que va a cargar la ficha de cada pelicula particular
 function detallePelicula (req,res){
       var id=req.params.id;
-      var sql="SELECT * FROM pelicula join actor_pelicula on pelicula.id=actor_pelicula.pelicula_id join actor on actor_pelicula.actor_id=actor.id where pelicula.id="+id;
-      
-      con.query(sql, function(error,resultado,fields){
-      var response={
-            'pelicula':resultado[0]
-      };
-      res.send(JSON.stringify(response));
-      })
+      var sqlpelicula="SELECT * FROM pelicula join actor_pelicula on pelicula.id=actor_pelicula.pelicula_id join actor on actor_pelicula.actor_id=actor.id where pelicula.id="+id;
+      var sqlactores=`SELECT actor.nombre FROM actor join actor_pelicula on actor.id=actor_id where pelicula_id=${id}`;
+      var sqlgenero="SELECT genero.nombre FROM genero,pelicula where genero_id=genero.id AND pelicula.id="+id;
 
+      con.query(sqlpelicula, function(error,resultadopelicula,fields){
+            if (error){ 
+                  console.log("hubo un error en la consutla", error.message);
+                  return res.status(404).send("Error en la consulta");
+            }else{
+                  con.query(sqlactores, function(error,resultadoactores,fields){
+                        con.query(sqlgenero, function(error,resultadogenero,fields){
+                        var response={
+                              'pelicula':resultadopelicula[0],
+                              'actores':resultadoactores,
+                              'genero':resultadogenero[0]
+                        };
+                        res.send(JSON.stringify(response));
+                        });
+                  });
+            }
+      });
 }
 
 
