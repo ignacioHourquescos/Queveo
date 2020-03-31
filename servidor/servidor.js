@@ -14,14 +14,9 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-
 app.get('/generos',buscarPeliculas.cargarGeneros);
-
-
-
 app.get('/peliculas',buscarPeliculas.buscarPeliculas);
-app.get('/peliculas/recomendacion',buscarPeliculas.recomendacion);
-app.get('/peliculas/:id',buscarPeliculas.detallePelicula);
+
 
 
 

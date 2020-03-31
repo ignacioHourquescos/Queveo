@@ -14,7 +14,7 @@
                 
                 pelicula = data.pelicula;
                 actores = data.actores;
-                genero = data.genero.nombre;
+                genero = data.pelicula.nombre;
 
                 $(".imagen").attr("src", pelicula.poster);
                 $(".titulo, title").html(pelicula.titulo + " (" + pelicula.anio + ")");
@@ -39,7 +39,7 @@
                         self.cargarDetalle(data);
                         //en el caso de que no se encuentre la pelicula, redirigir a la pagina de error
                     }).fail(function() {
-                   // window.location.href = "error.html";
+                    window.location.href = "error.html";
                 });
             }
 
